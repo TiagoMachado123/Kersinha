@@ -51,7 +51,6 @@
         cursor: crosshair;
         -webkit-font-smoothing: antialiased;
       }
-
       body:not(.loaded) {
         overflow: hidden;
       }
@@ -169,7 +168,6 @@
         pointer-events: none;
         position: relative;
       }
-
       .hero-eyebrow {
         display: inline-flex;
         align-items: center;
@@ -224,7 +222,6 @@
         background-clip: text;
         animation: shimmer 5s linear 1.4s infinite;
       }
-
       .hero-sub {
         margin-top: 1.8rem;
         font-size: clamp(0.87rem, 3.6vw, 1rem);
@@ -950,7 +947,7 @@
         margin-top: 0.3rem;
       }
 
-      /* ══════════════ GIFT BOX SECTION (Transparent) ══════════════ */
+      /* ══════════════ GIFT BOX SECTION ══════════════ */
       #gift-section {
         position: relative;
         width: 100%;
@@ -1345,7 +1342,7 @@
         animation: bounce 1.8s ease-in-out infinite;
       }
 
-      /* CAKE ANIMATION */
+      /* CAKE */
       .cake-scene {
         position: relative;
         width: 200px;
@@ -1730,13 +1727,11 @@
 
       <section id="gift-section">
         <canvas id="gift-canvas"></canvas>
-
         <div class="gift-moon">
           <div class="crater1"></div>
           <div class="crater2"></div>
           <div class="crater3"></div>
         </div>
-
         <div id="merrywrap" class="merrywrap">
           <div class="giftbox" id="giftbox">
             <div class="cover"><div></div></div>
@@ -1748,7 +1743,6 @@
             <span class="grow">Chronia Polla ✨</span>
           </div>
         </div>
-
         <a
           class="gift-scroll-cue"
           href="#twos"
@@ -1848,9 +1842,9 @@
               <div class="c-label">Our Playlist — "The 2's"</div>
               <p class="c-text">
                 <b>216 songs</b> · <b>15h 00min</b> — and it keeps growing.<br /><br />
-                <b>15</b> hours -> 1 + 5 = <b>6</b> (letters in Greece).<br />
-                <b>216</b> songs -> starts with <b>2</b>. And 2+1+6 = <b>9</b>.
-                My day (27) is 9. Your day is 7. <b>9 − 7 = 2</b>. <br /><br />
+                <b>15</b> hours → 1+5 = <b>6</b> (letters in Greece).<br />
+                <b>216</b> songs → starts with <b>2</b>. And 2+1+6 = <b>9</b>.
+                My day (27) is 9. Your day is 7. <b>9 − 7 = 2</b>.<br /><br />
                 <em style="color: var(--mint)"
                   >The universe is actually trolling us at this point.</em
                 >
@@ -1884,12 +1878,17 @@
         </div>
 
         <div class="playlist-wrap">
+          <!--
+            CORRECÇÃO: src usa /embed/ + ?utm_source=generator (obrigatório para o player funcionar)
+            sandbox="allow-scripts allow-same-origin" bloqueia o popup "Abrir no Spotify"
+            sem quebrar o player — allow-popups é intencionalmente omitido
+          -->
           <iframe
             style="border-radius: 12px; border: none; display: block"
-            src="https://open.spotify.com/playlist/01Oqdv3uiyyu6g6z2OAuAn?si=485a0ff20519488c"
+            src="https://open.spotify.com/embed/playlist/01Oqdv3uiyyu6g6z2OAuAn?utm_source=generator"
             width="100%"
             height="352"
-            allowfullscreen=""
+            sandbox="allow-scripts allow-same-origin"
             allow="
               autoplay;
               clipboard-write;
@@ -1924,15 +1923,15 @@
                   <p>I was gonna write something</p>
                   <p>super deep, but let's be real,</p>
                   <p>we're not about that life. 😅</p>
-                  <p> </p>
+                  <p>&nbsp;</p>
                   <p>Even if the universe is fully</p>
                   <p>broken with all these 2's,</p>
                   <p>I'm honestly glad it glitched</p>
                   <p>us into being friends.</p>
-                  <p> </p>
+                  <p>&nbsp;</p>
                   <p>Distance means nothing when</p>
                   <p>the simulation forces it. 🌍</p>
-                  <p> </p>
+                  <p>&nbsp;</p>
                   <p>Go eat a pita gyros for me.</p>
                   <p class="sign">Chronia Polla! 🎂✨</p>
                   <p class="sign">— your fav Brazilian 🇵🇹♥</p>
@@ -1951,30 +1950,18 @@
     </div>
 
     <script>
-      // Parar SVG Cake no load para sincronizar depois do clique
       document.addEventListener("DOMContentLoaded", () => {
         const cakeSvg = document.getElementById("cake");
-        if (cakeSvg && cakeSvg.pauseAnimations) {
-          cakeSvg.pauseAnimations();
-        }
+        if (cakeSvg && cakeSvg.pauseAnimations) cakeSvg.pauseAnimations();
       });
 
-      // ─────────────────────────────────────────────────────────────────────────
-      // INTRO SCREEN LOGIC
-      // ─────────────────────────────────────────────────────────────────────────
       document
         .getElementById("skip-intro")
         .addEventListener("click", function () {
           document.getElementById("intro-screen").classList.add("hidden");
           document.body.classList.add("loaded");
-
-          // Retomar bolo SVG
           const cakeSvg = document.getElementById("cake");
-          if (cakeSvg && cakeSvg.unpauseAnimations) {
-            cakeSvg.unpauseAnimations();
-          }
-
-          // Explodir log firework no meio!
+          if (cakeSvg && cakeSvg.unpauseAnimations) cakeSvg.unpauseAnimations();
           setTimeout(() => {
             if (bday) {
               bday.onClick({
@@ -1985,13 +1972,14 @@
                 clientX: window.innerWidth / 3,
                 clientY: window.innerHeight / 2,
               });
+              bday.onClick({
+                clientX: window.innerWidth * 0.7,
+                clientY: window.innerHeight / 2,
+              });
             }
           }, 300);
         });
 
-      // ─────────────────────────────────────────────────────────────────────────
-      // MAIN FIREWORKS (#birthday canvas)
-      // ─────────────────────────────────────────────────────────────────────────
       const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
       const PI2 = Math.PI * 2;
       const rnd = (a, b) => (Math.random() * (b - a + 1) + a) | 0;
@@ -2151,9 +2139,6 @@
         then = t;
       })();
 
-      // ─────────────────────────────────────────────────────────────────────────
-      // SCROLL-TRIGGERED REVEALS
-      // ─────────────────────────────────────────────────────────────────────────
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
@@ -2169,7 +2154,6 @@
         .querySelectorAll(".card, .message-card, .book-wrap")
         .forEach((el) => io.observe(el));
 
-      // Book card logic
       const bookCard = document.getElementById("bookCard");
       if (bookCard) {
         bookCard.addEventListener("click", () =>
@@ -2181,9 +2165,6 @@
         });
       }
 
-      // ─────────────────────────────────────────────────────────────────────────
-      // GIFT BOX SECTION LOGIC
-      // ─────────────────────────────────────────────────────────────────────────
       (function () {
         const giftCanvas = document.getElementById("gift-canvas");
         const gCtx = giftCanvas.getContext("2d");
@@ -2370,7 +2351,6 @@
         function setStep(s) {
           wrap.className = "merrywrap step-" + s;
         }
-
         function openBox() {
           if (step === 1) box.removeEventListener("click", openBox);
           setStep(step);
@@ -2381,7 +2361,6 @@
           setTimeout(openBox, delays[step - 1]);
           step++;
         }
-
         function startReveal() {
           gRunning = true;
           if (!gRafId) gLoop();
