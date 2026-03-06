@@ -52,6 +52,50 @@
         -webkit-font-smoothing: antialiased;
       }
 
+      /* Bloquear scroll antes do clique no intro */
+      body:not(.loaded) {
+        overflow: hidden;
+      }
+
+      /* ── Intro Screen ── */
+      #intro-screen {
+        position: fixed;
+        inset: 0;
+        background: #06060e;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          opacity 0.8s ease,
+          visibility 0.8s ease;
+      }
+      #intro-screen.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .intro-btn {
+        background: transparent;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        font-family: "Outfit", sans-serif;
+        font-size: 1.1rem;
+        padding: 1rem 2.5rem;
+        border-radius: 100px;
+        cursor: pointer;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 20px rgba(240, 190, 69, 0.15);
+      }
+      .intro-btn:hover {
+        background: var(--gold);
+        color: #06060e;
+        box-shadow: 0 0 35px rgba(240, 190, 69, 0.4);
+        transform: scale(1.05);
+      }
+
       /* ── Fireworks canvas ── */
       #birthday {
         position: fixed;
@@ -60,6 +104,7 @@
         height: 100vh;
         z-index: 0;
         pointer-events: none;
+        will-change: contents;
       }
 
       /* ── Ambient colour blobs ── */
@@ -70,6 +115,8 @@
         pointer-events: none;
         z-index: 0;
         opacity: 0;
+      }
+      .loaded .blob {
         animation: blobFade 2.5s ease 0.6s forwards;
       }
       .blob-1 {
@@ -140,6 +187,8 @@
         border-radius: 100px;
         margin-bottom: 2rem;
         opacity: 0;
+      }
+      .loaded .hero-eyebrow {
         animation: riseIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
       }
       .hero-eyebrow::before,
@@ -157,6 +206,8 @@
         letter-spacing: -0.03em;
         color: #fff;
         opacity: 0;
+      }
+      .loaded .hero-title {
         animation: riseIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.38s forwards;
       }
 
@@ -185,6 +236,8 @@
         line-height: 1.85;
         max-width: 270px;
         opacity: 0;
+      }
+      .loaded .hero-sub {
         animation: riseIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
       }
 
@@ -194,6 +247,8 @@
         font-size: 1.45rem;
         pointer-events: none;
         opacity: 0;
+      }
+      .loaded .fe {
         animation:
           floatAppear 0.7s ease forwards,
           floatBob 5s ease-in-out infinite;
@@ -228,10 +283,12 @@
         align-items: center;
         gap: 0.6rem;
         opacity: 0;
-        animation: riseIn 1s ease 1.9s forwards;
         pointer-events: auto;
         text-decoration: none;
         color: var(--text-dim);
+      }
+      .loaded .scroll-cue {
+        animation: riseIn 1s ease 1.9s forwards;
       }
       .scroll-cue-text {
         font-size: 0.58rem;
@@ -261,6 +318,7 @@
       /* ══════════════ SHARED SECTION ══════════════ */
       .section {
         padding: 5.5rem 1.5rem;
+        contain: layout style;
       }
 
       .s-label {
@@ -328,8 +386,6 @@
         display: flex;
         align-items: flex-start;
         gap: 0.9rem;
-        backdrop-filter: blur(20px) saturate(160%);
-        -webkit-backdrop-filter: blur(20px) saturate(160%);
         opacity: 0;
         transform: translateY(16px);
         transition:
@@ -344,6 +400,13 @@
       .card:active {
         transform: scale(0.975);
         transition-duration: 0.08s;
+      }
+
+      @media (min-width: 900px) {
+        .card {
+          backdrop-filter: blur(20px) saturate(160%);
+          -webkit-backdrop-filter: blur(20px) saturate(160%);
+        }
       }
 
       .badge {
@@ -400,7 +463,6 @@
         color: var(--mint);
       }
 
-      /* Universe card */
       .card-u {
         background: linear-gradient(
           135deg,
@@ -430,8 +492,12 @@
           rgba(240, 190, 69, 0.065),
           rgba(61, 232, 194, 0.035)
         );
-        backdrop-filter: blur(20px);
         text-align: center;
+      }
+      @media (min-width: 900px) {
+        .glitch-banner {
+          backdrop-filter: blur(20px);
+        }
       }
       .glitch-banner::before {
         content: "";
@@ -463,7 +529,6 @@
         line-height: 1;
       }
 
-      /* ══════════════ DIVIDER ══════════════ */
       .divider {
         max-width: 560px;
         margin: 0 auto;
@@ -476,7 +541,7 @@
         );
       }
 
-      /* ══════════════ PLAYLIST & MESSAGE ══════════════ */
+      /* PLAYLIST & MESSAGE */
       .playlist-wrap {
         max-width: 560px;
         border-radius: 14px;
@@ -497,8 +562,6 @@
         border: 1px solid var(--border);
         border-radius: 20px;
         padding: 2.2rem 1.6rem;
-        backdrop-filter: blur(22px) saturate(160%);
-        -webkit-backdrop-filter: blur(22px) saturate(160%);
         position: relative;
         overflow: hidden;
         opacity: 0;
@@ -506,6 +569,12 @@
         transition:
           opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
           transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      @media (min-width: 900px) {
+        .message-card {
+          backdrop-filter: blur(22px) saturate(160%);
+          -webkit-backdrop-filter: blur(22px) saturate(160%);
+        }
       }
       .message-card::before {
         content: "";
@@ -547,7 +616,6 @@
           transparent
         );
       }
-
       .msg-body {
         font-family: "Cormorant Garamond", serif;
         font-size: clamp(1.1rem, 4.5vw, 1.3rem);
@@ -560,7 +628,6 @@
         font-weight: 700;
         color: var(--gold);
       }
-
       .msg-sign {
         margin-top: 2rem;
         padding-top: 1.4rem;
@@ -573,7 +640,6 @@
         color: var(--text-xdim);
       }
 
-      /* ══════════════ FOOTER ══════════════ */
       .footer {
         padding: 2rem 1.5rem 3.5rem;
         text-align: center;
@@ -590,7 +656,7 @@
         padding-top: 1.6rem;
       }
 
-      /* ══════════════ ANIMATIONS ══════════════ */
+      /* ANIMATIONS */
       @keyframes riseIn {
         from {
           opacity: 0;
@@ -683,7 +749,6 @@
         opacity: 1;
         transform: translateY(0);
       }
-
       .book-hint {
         text-align: center;
         font-size: 0.65rem;
@@ -702,7 +767,6 @@
           opacity: 0.7;
         }
       }
-
       .book-card {
         color: var(--text);
         position: relative;
@@ -727,7 +791,6 @@
           0 20px 80px rgba(0, 0, 0, 0.7),
           0 0 0 1px rgba(240, 190, 69, 0.2);
       }
-
       .book-card::before {
         content: "";
         position: absolute;
@@ -751,7 +814,6 @@
         transform-origin: left;
         transform: skewY(-45deg);
       }
-
       .book-cover {
         width: 100%;
         height: 100%;
@@ -764,7 +826,6 @@
       .book-card.open .book-cover {
         transform: rotateY(-135deg);
       }
-
       .book-cover-art {
         width: 100%;
         height: 100%;
@@ -788,7 +849,6 @@
         padding: 2rem 1.5rem;
         text-align: center;
       }
-
       .cover-big-2 {
         font-family: "Cormorant Garamond", serif;
         font-size: 7rem;
@@ -801,7 +861,6 @@
         line-height: 1;
         filter: drop-shadow(0 0 20px rgba(240, 190, 69, 0.4));
       }
-
       .cover-title {
         font-family: "Amatic SC", cursive;
         font-size: 1.5rem;
@@ -810,7 +869,6 @@
         letter-spacing: 0.05em;
         line-height: 1.3;
       }
-
       .cover-subtitle {
         font-family: "Indie Flower", cursive;
         font-size: 0.85rem;
@@ -818,7 +876,6 @@
         opacity: 0.8;
         margin-top: 0.3rem;
       }
-
       .cover-stars {
         display: flex;
         gap: 0.4rem;
@@ -827,7 +884,6 @@
         font-size: 0.8rem;
         opacity: 0.5;
       }
-
       .book-shadow {
         position: absolute;
         inset: 0;
@@ -841,7 +897,6 @@
         opacity: 1;
         transition: 0.5s;
       }
-
       .book-pages {
         position: absolute;
         top: 0;
@@ -855,7 +910,6 @@
         border-radius: 2px 8px 8px 2px;
         overflow: hidden;
       }
-
       .book-pages::before {
         content: "";
         position: absolute;
@@ -869,7 +923,6 @@
         );
         pointer-events: none;
       }
-
       .book-pages::after {
         content: "";
         position: absolute;
@@ -879,7 +932,6 @@
         height: 100%;
         background: rgba(220, 80, 80, 0.25);
       }
-
       .book-msg-title {
         font-family: "Amatic SC", cursive;
         font-size: 1.5rem;
@@ -890,7 +942,6 @@
         margin-bottom: 0.6rem;
         position: relative;
       }
-
       .book-msg-subtitle {
         font-family: "Amatic SC", cursive;
         font-size: 1.1rem;
@@ -899,7 +950,6 @@
         margin-bottom: 0.9rem;
         position: relative;
       }
-
       .book-msg-body p {
         font-family: "Indie Flower", cursive;
         font-size: 0.9rem;
@@ -909,7 +959,6 @@
         margin-bottom: 0.05rem;
         position: relative;
       }
-
       .book-msg-body .sign {
         text-align: right;
         color: #8b5c2a;
@@ -917,33 +966,16 @@
         margin-top: 0.3rem;
       }
 
-      /* ══════════════ GIFT BOX SECTION — FIXED ══════════════ */
+      /* ══════════════ GIFT BOX SECTION (Transparent / Blended) ══════════════ */
       #gift-section {
         position: relative;
         width: 100%;
         height: 100dvh;
         overflow: hidden;
-        /* CHANGED: warm sunset → dark site-consistent bg with subtle color glows */
-        background:
-          radial-gradient(
-            ellipse at 25% 15%,
-            rgba(240, 190, 69, 0.09) 0%,
-            transparent 45%
-          ),
-          radial-gradient(
-            ellipse at 75% 35%,
-            rgba(255, 107, 157, 0.07) 0%,
-            transparent 45%
-          ),
-          radial-gradient(
-            ellipse at 50% 85%,
-            rgba(61, 232, 194, 0.05) 0%,
-            transparent 50%
-          ),
-          #06060e;
+        background: transparent; /* Changed from dark gradient to fit the global background */
+        contain: layout style;
       }
-
-      /* ADDED: subtle stars scattered across the section */
+      /* Subtle stars */
       #gift-section::before {
         content: "";
         position: absolute;
@@ -1027,24 +1059,6 @@
         pointer-events: none;
         z-index: 1;
       }
-
-      /* ADDED: subtle gold horizontal divider at top to blend with prev section */
-      #gift-section::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 10%;
-        right: 10%;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(240, 190, 69, 0.18),
-          transparent
-        );
-        z-index: 2;
-      }
-
       #gift-canvas {
         position: absolute;
         inset: 0;
@@ -1052,9 +1066,8 @@
         height: 100%;
         pointer-events: none;
         z-index: 2;
+        will-change: contents;
       }
-
-      /* CHANGED: moon now blends with the dark + gold palette */
       .gift-moon {
         position: absolute;
         top: 8%;
@@ -1063,7 +1076,6 @@
         height: 70px;
         border-radius: 50%;
         background: #e8dfc0;
-        /* CHANGED: added subtle gold ambient glow */
         box-shadow:
           inset 14px -8px 0 0 #c9bfa0,
           0 0 40px 6px rgba(240, 190, 69, 0.07),
@@ -1100,8 +1112,6 @@
         top: 42px;
         right: 18px;
       }
-
-      /* CHANGED: sea strip — dark, matches site bg, subtle gold rim */
       #gift-sea {
         position: absolute;
         bottom: 0;
@@ -1111,13 +1121,11 @@
         background: linear-gradient(
           180deg,
           rgba(240, 190, 69, 0.03) 0%,
-          #06060e 100%
+          transparent 100%
         );
         border-top: 1px solid rgba(240, 190, 69, 0.07);
         z-index: 3;
       }
-
-      /* Merry wrap — the interactive layer */
       .merrywrap {
         position: absolute;
         inset: 0;
@@ -1126,8 +1134,6 @@
         font-family: "Kaushan Script", cursive;
         z-index: 4;
       }
-
-      /* Gift box */
       .giftbox {
         position: absolute;
         width: 240px;
@@ -1138,7 +1144,6 @@
         z-index: 10;
         cursor: pointer;
       }
-
       .giftbox > div {
         background: #1a1530;
         position: absolute;
@@ -1149,7 +1154,6 @@
         content: "";
         top: 0;
       }
-
       .giftbox::after {
         position: absolute;
         color: #fff;
@@ -1163,7 +1167,6 @@
         transform-origin: 0 0;
         opacity: 0.7;
       }
-
       .giftbox .cover {
         width: 100%;
         top: 0;
@@ -1206,7 +1209,6 @@
       .giftbox .cover > div::after {
         transform: translateX(45%) skewY(-40deg);
       }
-
       .giftbox .box {
         right: 4%;
         left: 4%;
@@ -1230,7 +1232,6 @@
         position: absolute;
       }
 
-      /* Neon birthday text */
       .gift-icons {
         position: absolute;
         left: 0;
@@ -1254,7 +1255,6 @@
         text-shadow: 4px 4px 0 rgba(96, 125, 139, 0.3);
       }
 
-      /* States */
       .step-1 .giftbox {
         animation: giftWobble 0.5s linear infinite;
       }
@@ -1264,7 +1264,6 @@
       .step-1 .gift-icons .grow {
         opacity: 0;
       }
-
       .step-2 .giftbox::after {
         opacity: 0;
       }
@@ -1280,7 +1279,6 @@
       .step-2 .gift-icons .grow:nth-child(3) {
         transition-delay: 0.2s;
       }
-
       .step-3 .giftbox,
       .step-4 .giftbox {
         opacity: 0;
@@ -1290,14 +1288,12 @@
       .step-4 .giftbox::after {
         opacity: 0;
       }
-
       .step-2 .gift-icons .grow,
       .step-3 .gift-icons .grow,
       .step-4 .gift-icons .grow {
         opacity: 1;
         transition-timing-function: cubic-bezier(0, 0, 0.2, 0.91);
       }
-
       .step-3 .gift-icons .grow,
       .step-4 .gift-icons .grow {
         animation: giftNeon 0.08s ease-in-out infinite alternate;
@@ -1352,7 +1348,6 @@
         }
       }
 
-      /* Scroll cue on gift section */
       .gift-scroll-cue {
         position: absolute;
         bottom: 80px;
@@ -1380,7 +1375,7 @@
         animation: bounce 1.8s ease-in-out infinite;
       }
 
-      /* ══════════════ CAKE ANIMATION ══════════════ */
+      /* CAKE ANIMATION */
       .cake-scene {
         position: relative;
         width: 200px;
@@ -1388,17 +1383,16 @@
         overflow: hidden;
         margin: 2rem auto 0;
         opacity: 0;
+      }
+      .loaded .cake-scene {
         animation: riseIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
       }
-
       #cake {
         position: absolute;
         top: -155px;
         left: 0;
         display: block;
       }
-
-      /* ── Candle ── */
       .velas {
         background: linear-gradient(180deg, #f5e88a, var(--gold));
         border-radius: 10px;
@@ -1429,8 +1423,6 @@
         top: 50%;
         left: 0;
       }
-
-      /* ── Flame ── */
       .fuego {
         border-radius: 100%;
         position: absolute;
@@ -1455,7 +1447,6 @@
       .fuego:nth-child(5) {
         animation: fuego 0.2s 6.5s infinite;
       }
-
       @keyframes fuego {
         0%,
         100% {
@@ -1475,7 +1466,7 @@
         }
       }
 
-      /* ══════════════ RESPONSIVE ══════════════ */
+      /* RESPONSIVE */
       @media (min-width: 440px) {
         .cards-grid {
           grid-template-columns: 1fr 1fr;
@@ -1484,7 +1475,6 @@
           grid-column: 1/-1;
         }
       }
-
       @media (min-width: 600px) {
         .section {
           padding: 6rem 2.5rem;
@@ -1493,7 +1483,6 @@
           font-size: clamp(3.5rem, 10vw, 6rem);
         }
       }
-
       @media (min-width: 900px) {
         .page {
           max-width: 1100px;
@@ -1536,7 +1525,7 @@
           max-width: 100%;
         }
         .card-u {
-          grid-column: 1 / -1;
+          grid-column: 1/-1;
         }
         .c-text {
           font-size: 1rem;
@@ -1585,7 +1574,6 @@
           right: 3%;
         }
       }
-
       @media (min-width: 1200px) {
         .page {
           max-width: 1200px;
@@ -1600,9 +1588,21 @@
           font-size: 5rem;
         }
       }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
     </style>
   </head>
   <body>
+    <div id="intro-screen">
+      <button class="intro-btn" id="skip-intro">Click to Enter ✦</button>
+    </div>
+
     <canvas id="birthday"></canvas>
 
     <div class="blob blob-1"></div>
@@ -1610,7 +1610,6 @@
     <div class="blob blob-3"></div>
 
     <div class="page">
-      <!-- ── HERO ── -->
       <section id="hero">
         <span class="fe fe2">🇲🇰</span>
         <span class="fe fe3">🇹🇷</span>
@@ -1625,11 +1624,10 @@
 
         <p class="hero-sub">
           To my absolute favorite<br />
-          North Macedonian&nbsp;/&nbsp;Turkish friend.<br />
+          North Macedonian / Turkish friend.<br />
           <span style="opacity: 0.6">(Please don't kill me 🏃‍♂️💨)</span>
         </p>
 
-        <!-- Cake animation -->
         <div class="cake-scene">
           <div class="velas">
             <div class="fuego"></div>
@@ -1749,13 +1747,12 @@
           </svg>
         </div>
 
-        <a class="scroll-cue" href="#twos" aria-label="Scroll down">
+        <a class="scroll-cue" href="#gift-section" aria-label="Scroll down">
           <span class="scroll-cue-text">Scroll bro</span>
           <div class="scroll-mouse"></div>
         </a>
       </section>
 
-      <!-- ── GIFT BOX SECTION ── -->
       <section id="gift-section">
         <canvas id="gift-canvas"></canvas>
 
@@ -1789,7 +1786,6 @@
         </a>
       </section>
 
-      <!-- ── SECTION 2: THE 2's ── -->
       <section id="twos" class="section">
         <div class="s-header">
           <div class="s-label rose">🔢 The Simulation is Broken</div>
@@ -1809,7 +1805,6 @@
               <p class="c-text"><b>2 hours</b> time difference between us.</p>
             </div>
           </div>
-
           <div class="card" style="--d: 55ms">
             <div class="badge b-gold">2</div>
             <div>
@@ -1819,7 +1814,6 @@
               </p>
             </div>
           </div>
-
           <div class="card" style="--d: 110ms">
             <div class="badge b-gold">2</div>
             <div>
@@ -1827,7 +1821,6 @@
               <p class="c-text"><b>2 years</b> between us — 2006 and 2008.</p>
             </div>
           </div>
-
           <div class="card" style="--d: 165ms">
             <div class="badge b-gold">2</div>
             <div>
@@ -1837,7 +1830,6 @@
               </p>
             </div>
           </div>
-
           <div class="card" style="--d: 220ms">
             <div class="badge b-gold">2</div>
             <div>
@@ -1845,7 +1837,6 @@
               <p class="c-text">Month 11 → <b>1+1 = 2</b>. Obvious, really.</p>
             </div>
           </div>
-
           <div class="card" style="--d: 275ms">
             <div class="badge b-gold">2</div>
             <div>
@@ -1855,7 +1846,6 @@
               </p>
             </div>
           </div>
-
           <div class="card" style="--d: 330ms">
             <div class="badge b-gold">2</div>
             <div>
@@ -1863,7 +1853,6 @@
               <p class="c-text"><b>75 weeks + 2 days</b> apart. Exactly.</p>
             </div>
           </div>
-
           <div class="card" style="--d: 385ms">
             <div class="badge b-gold">2</div>
             <div>
@@ -1871,7 +1860,6 @@
               <p class="c-text">Portugal (8) − Greece (6) = <b>2</b>.</p>
             </div>
           </div>
-
           <div class="card" style="--d: 440ms">
             <div class="badge b-gold">2</div>
             <div>
@@ -1881,14 +1869,16 @@
               </p>
             </div>
           </div>
-
           <div class="card card-u" style="--d: 510ms">
             <div class="badge b-emoji">🎵</div>
             <div>
               <div class="c-label">Our Playlist — "The 2's"</div>
               <p class="c-text">
-                <b>215 songs</b> · <b>14h 57min</b> — and it keeps growing.
-                <br /><br />
+                <b>216 songs</b> · <b>14h 57min</b> — and it keeps growing.<br /><br />
+                <b>14</b> hours = 7 × 2.<br />
+                <b>57</b> mins = 7 − 5 = <b>2</b>.<br />
+                <b>216</b> songs = starts with <b>2</b>. And 2+1+6 = <b>9</b>.
+                My day (27) is 9. Your day is 7. <b>9 − 7 = 2</b>. <br /><br />
                 <em style="color: var(--mint)"
                   >The universe is actually trolling us at this point.</em
                 >
@@ -1900,11 +1890,11 @@
         <div class="glitch-banner">
           <p>
             <span class="big2">2</span>
-            &nbsp;is not just a number. It's a
+            is not just a number. It's a
             <em style="color: var(--gold)">pattern</em>, a
             <em style="color: var(--rose)">coincidence</em>, a
             <em style="color: var(--mint)">glitch</em> — and somehow it's
-            <strong>us</strong>.&nbsp;
+            <strong>us</strong>.
             <span class="big2">2</span>
           </p>
         </div>
@@ -1912,19 +1902,18 @@
 
       <div class="divider"></div>
 
-      <!-- ── SECTION 3: PLAYLIST & MESSAGE ── -->
       <section id="message" class="section">
         <div class="s-header">
           <div class="s-label rose">🎧 The Playlist</div>
           <h2 class="s-title">Our <em>Soundtrack</em></h2>
-          <p class="s-desc">215 songs. Two people. One ridiculous number.</p>
+          <p class="s-desc">216 songs. Two people. One ridiculous number.</p>
         </div>
 
         <div class="playlist-wrap">
           <iframe
             data-testid="embed-iframe"
             style="border-radius: 12px; display: block"
-            src="https://open.spotify.com/embed/playlist/01Oqdv3uiyyu6g6z2OAuAn?utm_source=generator"
+            src="https://open.spotify.com/playlist/01Oqdv3uiyyu6g6z2OAuAn?si=485a0ff20519488c"
             width="100%"
             height="352"
             frameborder="0"
@@ -1953,7 +1942,6 @@
                 </div>
                 <div class="book-shadow"></div>
               </div>
-
               <div class="book-pages">
                 <div class="book-msg-title">Happy Birthday! 🎂</div>
                 <div class="book-msg-subtitle">
@@ -1990,11 +1978,48 @@
       </div>
     </div>
 
-    <!-- ── FIREWORKS ── -->
     <script>
+      // ─────────────────────────────────────────────────────────────────────────
+      // INTRO SCREEN LOGIC
+      // ─────────────────────────────────────────────────────────────────────────
+      document
+        .getElementById("skip-intro")
+        .addEventListener("click", function () {
+          // Fade out overlay
+          document.getElementById("intro-screen").classList.add("hidden");
+          // Adiciona classe para desativar o 'overflow: hidden' e iniciar animações do Hero
+          document.body.classList.add("loaded");
+
+          // Explodir logo 2 ou 3 fogos de artifício para festejar a entrada!
+          setTimeout(() => {
+            if (bday) {
+              bday.onClick({
+                clientX: window.innerWidth / 2,
+                clientY: window.innerHeight / 3,
+              });
+              bday.onClick({
+                clientX: window.innerWidth / 3,
+                clientY: window.innerHeight / 2,
+              });
+            }
+          }, 300);
+        });
+
+      // ─────────────────────────────────────────────────────────────────────────
+      // MAIN FIREWORKS (#birthday canvas)
+      // ─────────────────────────────────────────────────────────────────────────
+      const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
       const PI2 = Math.PI * 2;
       const rnd = (a, b) => (Math.random() * (b - a + 1) + a) | 0;
       const now = () => Date.now();
+
+      const isMobile =
+        /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ||
+        window.innerWidth < 768;
+      const MAX_FIREWORKS = isMobile ? 200 : 600;
+      const SPAWN_INTERVAL = isMobile ? 1.8 : 1;
+      const TRAIL_LEN = isMobile ? 10 : 20;
+      const BURST_PARTS = isMobile ? 25 : 50;
 
       class Birthday {
         constructor() {
@@ -2003,27 +2028,33 @@
           this.counter = 0;
         }
         resize() {
-          this.w = canvas.width = window.innerWidth;
-          const c = (this.w / 2) | 0;
-          this.sA = (c - c / 4) | 0;
-          this.sB = (c + c / 4) | 0;
-          this.h = canvas.height = window.innerHeight;
-          this.sC = this.h * 0.1;
-          this.sD = this.h * 0.5;
+          this.w = canvas.width = window.innerWidth * DPR;
+          this.h = canvas.height = window.innerHeight * DPR;
+          canvas.style.width = window.innerWidth + "px";
+          canvas.style.height = window.innerHeight + "px";
+          ctx.scale(DPR, DPR);
+          const cw = (window.innerWidth / 2) | 0;
+          this.sA = (cw - cw / 4) | 0;
+          this.sB = (cw + cw / 4) | 0;
+          this.sC = window.innerHeight * 0.1;
+          this.sD = window.innerHeight * 0.5;
+          this.vw = window.innerWidth;
+          this.vh = window.innerHeight;
         }
         onClick(e) {
           const x = e.clientX ?? e.touches?.[0]?.pageX;
           const y = e.clientY ?? e.touches?.[0]?.pageY;
           if (x == null) return;
-          for (let i = rnd(3, 5); i--; )
+          const count = isMobile ? 2 : rnd(3, 5);
+          for (let i = count; i--; )
             this.fireworks.push(
               new Firework(
                 rnd(this.sA, this.sB),
-                this.h,
+                this.vh,
                 x,
                 y,
                 rnd(0, 260),
-                rnd(30, 110),
+                rnd(30, BURST_PARTS),
               ),
             );
           this.counter = -1;
@@ -2031,23 +2062,23 @@
         update(dt) {
           ctx.globalCompositeOperation = "hard-light";
           ctx.fillStyle = `rgba(6,6,14,${7 * dt})`;
-          ctx.fillRect(0, 0, this.w, this.h);
+          ctx.fillRect(0, 0, this.vw, this.vh);
           ctx.globalCompositeOperation = "lighter";
           for (const f of this.fireworks) f.update(dt);
-          if ((this.counter += dt * 3) >= 1) {
+          if ((this.counter += dt * SPAWN_INTERVAL) >= 1) {
             this.fireworks.push(
               new Firework(
                 rnd(this.sA, this.sB),
-                this.h,
-                rnd(0, this.w),
+                this.vh,
+                rnd(0, this.vw),
                 rnd(this.sC, this.sD),
                 rnd(0, 360),
-                rnd(30, 110),
+                rnd(30, BURST_PARTS),
               ),
             );
             this.counter = 0;
           }
-          if (this.fireworks.length > 1000)
+          if (this.fireworks.length > MAX_FIREWORKS)
             this.fireworks = this.fireworks.filter((f) => !f.dead);
         }
       }
@@ -2071,7 +2102,7 @@
             this.x += dx * 2 * dt;
             this.y += dy * 2 * dt;
             this.hist.push({ x: this.x, y: this.y });
-            if (this.hist.length > 20) this.hist.shift();
+            if (this.hist.length > TRAIL_LEN) this.hist.shift();
           } else {
             if (this.offs && !this.done) {
               const b = this.offs / 2;
@@ -2115,6 +2146,19 @@
       let then = now();
       const bday = new Birthday();
 
+      let bdayPaused = false;
+      let bdayRafId = null;
+      const giftSectionEl = document.getElementById("gift-section");
+      const pauseObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            bdayPaused = e.isIntersecting;
+          });
+        },
+        { threshold: 0.2 },
+      );
+      pauseObserver.observe(giftSectionEl);
+
       window.addEventListener("resize", () => bday.resize());
 
       function spawnFW(e) {
@@ -2130,13 +2174,16 @@
       document.addEventListener("touchstart", spawnFW, { passive: true });
 
       (function loop() {
-        requestAnimationFrame(loop);
+        bdayRafId = requestAnimationFrame(loop);
+        if (bdayPaused) return;
         const t = now();
         bday.update((t - then) / 1000);
         then = t;
       })();
 
-      /* Scroll-triggered reveals */
+      // ─────────────────────────────────────────────────────────────────────────
+      // SCROLL-TRIGGERED REVEALS
+      // ─────────────────────────────────────────────────────────────────────────
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
@@ -2148,12 +2195,11 @@
         },
         { threshold: 0.1 },
       );
-
       document
         .querySelectorAll(".card, .message-card, .book-wrap")
         .forEach((el) => io.observe(el));
 
-      /* Book card — tap/click to open/close */
+      // Book card logic
       const bookCard = document.getElementById("bookCard");
       if (bookCard) {
         bookCard.addEventListener("click", () =>
@@ -2165,24 +2211,43 @@
         });
       }
 
-      /* ── GIFT BOX SECTION ── */
+      // ─────────────────────────────────────────────────────────────────────────
+      // GIFT BOX SECTION LOGIC
+      // ─────────────────────────────────────────────────────────────────────────
       (function () {
         const giftCanvas = document.getElementById("gift-canvas");
         const gCtx = giftCanvas.getContext("2d");
-        let gcw = (giftCanvas.width = window.innerWidth);
-        let gch = (giftCanvas.height = window.innerHeight);
+
+        function resizeGift() {
+          giftCanvas.width = window.innerWidth * DPR;
+          giftCanvas.height = window.innerHeight * DPR;
+          giftCanvas.style.width = window.innerWidth + "px";
+          giftCanvas.style.height = window.innerHeight + "px";
+          gCtx.scale(DPR, DPR);
+        }
+        resizeGift();
+        window.addEventListener("resize", resizeGift);
+
+        let gcw = window.innerWidth,
+          gch = window.innerHeight;
         window.addEventListener("resize", () => {
-          gcw = giftCanvas.width = window.innerWidth;
-          gch = giftCanvas.height = window.innerHeight;
+          gcw = window.innerWidth;
+          gch = window.innerHeight;
         });
 
         const gFireworks = [],
           gParticles = [];
+        const G_MAX_FW = isMobile ? 8 : 15;
+        const G_MAX_PART = isMobile ? 80 : 200;
+        const G_PARTS_PER_BURST = isMobile ? 12 : 25;
+        const G_SPAWN_TICKS = isMobile ? 120 : 80;
+
         let gHue = 30,
           gTimerTick = 0,
-          gRunning = false;
+          gRunning = false,
+          gRafId = null;
 
-        function gRandom(min, max) {
+        function gRand(min, max) {
           return Math.random() * (max - min) + min;
         }
         function gDist(x1, y1, x2, y2) {
@@ -2206,7 +2271,7 @@
           this.angle = Math.atan2(ty - sy, tx - sx);
           this.speed = 2;
           this.accel = 1.05;
-          this.brightness = gRandom(50, 70);
+          this.brightness = gRand(50, 70);
           this.targetR = 1;
         }
         GFirework.prototype.update = function (i) {
@@ -2249,14 +2314,14 @@
             [x, y],
             [x, y],
           ];
-          this.angle = gRandom(0, Math.PI * 2);
-          this.speed = gRandom(1, 10);
+          this.angle = gRand(0, Math.PI * 2);
+          this.speed = gRand(1, 10);
           this.friction = 0.95;
           this.gravity = 1;
-          this.hue = gRandom(gHue - 20, gHue + 20);
-          this.brightness = gRandom(50, 80);
+          this.hue = gRand(gHue - 20, gHue + 20);
+          this.brightness = gRand(50, 80);
           this.alpha = 1;
-          this.decay = gRandom(0.015, 0.03);
+          this.decay = gRand(0.015, 0.03);
         }
         GParticle.prototype.update = function (i) {
           this.coords.pop();
@@ -2279,13 +2344,13 @@
         };
 
         function gCreateParticles(x, y) {
-          let n = 30;
+          if (gParticles.length + G_PARTS_PER_BURST > G_MAX_PART) return;
+          let n = G_PARTS_PER_BURST;
           while (n--) gParticles.push(new GParticle(x, y));
         }
 
         function gLoop() {
-          if (!gRunning) return;
-          requestAnimationFrame(gLoop);
+          gRafId = requestAnimationFrame(gLoop);
           gHue += 0.5;
           gCtx.globalCompositeOperation = "destination-out";
           gCtx.fillStyle = "rgba(0,0,0,0.5)";
@@ -2301,13 +2366,30 @@
             gParticles[i].draw();
             gParticles[i].update(i);
           }
-          if (++gTimerTick >= 80) {
-            gFireworks.push(
-              new GFirework(gcw / 2, gch, gRandom(0, gcw), gRandom(0, gch / 2)),
-            );
+          if (++gTimerTick >= G_SPAWN_TICKS) {
+            if (gFireworks.length < G_MAX_FW)
+              gFireworks.push(
+                new GFirework(gcw / 2, gch, gRand(0, gcw), gRand(0, gch / 2)),
+              );
             gTimerTick = 0;
           }
         }
+
+        const giftVisObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting && gRunning && !gRafId) {
+                gLoop();
+              } else if (!e.isIntersecting && gRafId) {
+                cancelAnimationFrame(gRafId);
+                gRafId = null;
+                gCtx.clearRect(0, 0, gcw, gch);
+              }
+            });
+          },
+          { threshold: 0.05 },
+        );
+        giftVisObserver.observe(giftSectionEl);
 
         const wrap = document.getElementById("merrywrap");
         const box = document.getElementById("giftbox");
@@ -2331,7 +2413,7 @@
 
         function startReveal() {
           gRunning = true;
-          gLoop();
+          if (!gRafId) gLoop();
         }
 
         box.addEventListener("click", openBox);
