@@ -52,7 +52,6 @@
         -webkit-font-smoothing: antialiased;
       }
 
-      /* Bloquear scroll antes do clique no intro */
       body:not(.loaded) {
         overflow: hidden;
       }
@@ -153,7 +152,6 @@
         left: -70px;
       }
 
-      /* ── Page wrapper ── */
       .page {
         position: relative;
         z-index: 2;
@@ -210,7 +208,6 @@
       .loaded .hero-title {
         animation: riseIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.38s forwards;
       }
-
       .hero-title em {
         display: block;
         font-style: italic;
@@ -241,7 +238,6 @@
         animation: riseIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
       }
 
-      /* Floating corner emojis */
       .fe {
         position: absolute;
         font-size: 1.45rem;
@@ -274,7 +270,6 @@
         animation-delay: 1.2s, 1.9s;
       }
 
-      /* Scroll cue */
       .scroll-cue {
         margin-top: auto;
         padding-top: 3rem;
@@ -320,7 +315,6 @@
         padding: 5.5rem 1.5rem;
         contain: layout style;
       }
-
       .s-label {
         display: inline-flex;
         align-items: center;
@@ -343,7 +337,6 @@
         border: 1px solid var(--border-gold);
         background: var(--gold-dim);
       }
-
       .s-title {
         font-family: "Cormorant Garamond", serif;
         font-size: clamp(2.3rem, 10vw, 4rem);
@@ -356,7 +349,6 @@
         font-style: italic;
         color: var(--gold);
       }
-
       .s-desc {
         margin-top: 0.9rem;
         font-size: 0.9rem;
@@ -365,7 +357,6 @@
         line-height: 1.8;
         max-width: 310px;
       }
-
       .s-header {
         margin-bottom: 3rem;
       }
@@ -377,7 +368,6 @@
         gap: 0.7rem;
         max-width: 560px;
       }
-
       .card {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -401,14 +391,12 @@
         transform: scale(0.975);
         transition-duration: 0.08s;
       }
-
       @media (min-width: 900px) {
         .card {
           backdrop-filter: blur(20px) saturate(160%);
           -webkit-backdrop-filter: blur(20px) saturate(160%);
         }
       }
-
       .badge {
         flex-shrink: 0;
         width: 38px;
@@ -442,14 +430,12 @@
         width: 42px;
         height: 42px;
       }
-
       .c-label {
         font-size: 0.68rem;
         font-weight: 600;
         letter-spacing: 0.14em;
         text-transform: uppercase;
         color: var(--gold);
-        opacity: 1;
         margin-bottom: 0.2rem;
       }
       .c-text {
@@ -462,7 +448,6 @@
         font-weight: 600;
         color: var(--mint);
       }
-
       .card-u {
         background: linear-gradient(
           135deg,
@@ -478,7 +463,6 @@
         color: var(--gold);
       }
 
-      /* Glitch banner */
       .glitch-banner {
         margin-top: 2.2rem;
         max-width: 560px;
@@ -594,7 +578,6 @@
         opacity: 1;
         transform: translateY(0);
       }
-
       .msg-from {
         font-size: 0.6rem;
         font-weight: 600;
@@ -732,7 +715,7 @@
         }
       }
 
-      /* ══════════════ BOOK CARD ══════════════ */
+      /* BOOK CARD */
       .book-wrap {
         max-width: 560px;
         margin: 0 auto;
@@ -966,16 +949,15 @@
         margin-top: 0.3rem;
       }
 
-      /* ══════════════ GIFT BOX SECTION (Transparent / Blended) ══════════════ */
+      /* ══════════════ GIFT BOX SECTION (Transparent) ══════════════ */
       #gift-section {
         position: relative;
         width: 100%;
         height: 100dvh;
         overflow: hidden;
-        background: transparent; /* Changed from dark gradient to fit the global background */
+        background: transparent;
         contain: layout style;
       }
-      /* Subtle stars */
       #gift-section::before {
         content: "";
         position: absolute;
@@ -1112,20 +1094,7 @@
         top: 42px;
         right: 18px;
       }
-      #gift-sea {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 70px;
-        background: linear-gradient(
-          180deg,
-          rgba(240, 190, 69, 0.03) 0%,
-          transparent 100%
-        );
-        border-top: 1px solid rgba(240, 190, 69, 0.07);
-        z-index: 3;
-      }
+
       .merrywrap {
         position: absolute;
         inset: 0;
@@ -1385,7 +1354,7 @@
         opacity: 0;
       }
       .loaded .cake-scene {
-        animation: riseIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+        animation: riseIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
       }
       #cake {
         position: absolute;
@@ -1404,8 +1373,10 @@
         height: 35px;
         transform: translateY(-300px);
         backface-visibility: hidden;
-        animation: cakeIn 500ms 6s ease-out forwards;
         box-shadow: 0 0 8px rgba(240, 190, 69, 0.5);
+      }
+      .loaded .velas {
+        animation: cakeIn 500ms 3.2s ease-out forwards;
       }
       .velas::after,
       .velas::before {
@@ -1431,21 +1402,22 @@
         margin-left: -2.6px;
         width: 6.67px;
         height: 18px;
+        opacity: 0;
       }
-      .fuego:nth-child(1) {
-        animation: fuego 2s 6.5s infinite;
+      .loaded .fuego:nth-child(1) {
+        animation: fuego 2s 3.7s infinite;
       }
-      .fuego:nth-child(2) {
-        animation: fuego 1.5s 6.5s infinite;
+      .loaded .fuego:nth-child(2) {
+        animation: fuego 1.5s 3.7s infinite;
       }
-      .fuego:nth-child(3) {
-        animation: fuego 1s 6.5s infinite;
+      .loaded .fuego:nth-child(3) {
+        animation: fuego 1s 3.7s infinite;
       }
-      .fuego:nth-child(4) {
-        animation: fuego 0.5s 6.5s infinite;
+      .loaded .fuego:nth-child(4) {
+        animation: fuego 0.5s 3.7s infinite;
       }
-      .fuego:nth-child(5) {
-        animation: fuego 0.2s 6.5s infinite;
+      .loaded .fuego:nth-child(5) {
+        animation: fuego 0.2s 3.7s infinite;
       }
       @keyframes fuego {
         0%,
@@ -1453,11 +1425,13 @@
           background: rgba(254, 220, 80, 0.85);
           box-shadow: 0 0 30px 8px rgba(240, 190, 69, 0.35);
           transform: translateY(0) scale(1);
+          opacity: 1;
         }
         50% {
           background: rgba(255, 100, 30, 0.2);
           box-shadow: 0 0 40px 18px rgba(240, 190, 69, 0.15);
           transform: translateY(-18px) scale(0);
+          opacity: 1;
         }
       }
       @keyframes cakeIn {
@@ -1716,7 +1690,7 @@
                 attributeName="d"
                 calcMode="spline"
                 keySplines="0 0 1 1; 0 0 1 1; 0 0 1 1; 0.25 0 1 1; 0 0 1 1; 0.25 0 0.6 1"
-                begin="2s"
+                begin="0.5s"
                 dur="0.8s"
                 fill="freeze"
                 values="M173.667,21.571c-33.174,0-111.467,0-147.334,0c-4,0-4-16.002,0-16.002c39.836,0,105.982,0,147.334,0 C177.668,5.569,177.667,21.571,173.667,21.571z;M173.667,459.569c-33.197,16.002-110.782,16.002-147.334,0c-3.664-1.604,1.614-15.617,5.337-14.153 c40.702,16.002,94.289,16.104,136.505,0.103C171.917,444.1,177.271,457.832,173.667,459.569z;M171.817,475.571c-39.361-3.001-105.438-2.571-143.556,0c-3.991,0.27-7.377-14.736-3.387-15.014 c41.553-2.888,104.421-3.121,150.51-0.233C179.378,460.574,175.806,475.875,171.817,475.571z;M171.817,459.564c-38.8-12.188-104.504-13.762-143.556,0c-3.772,1.329-7.961-12.604-4.178-13.905 c40.864-14.064,105.114-15.52,151.918-0.973C179.822,445.874,175.634,460.762,171.817,459.564z;M173.667,475.571c-46.376-5.005-105.924-4.003-147.334,0c-3.981,0.385-3.479-15.421,0.479-16.002 c43.087-6.327,97.705-7.083,146.855,0.438C177.621,460.613,177.644,476,173.667,475.571z;M173.667,474.117c-46.376,1.866-105.638,2.01-147.334,0c-3.995-0.192-3.52-16.144,0.479-16.002 c43.794,1.55,96.341,1.541,145.723,0C176.532,457.99,177.663,473.956,173.667,474.117z;M173.667,475.571c-46.512,0-105.486,0-147.334,0c-3.999,0-4-16.002,0-16.002c43.566,0,97.96,0,147.334,0 C177.667,459.569,177.666,475.571,173.667,475.571z"
@@ -1761,8 +1735,6 @@
           <div class="crater2"></div>
           <div class="crater3"></div>
         </div>
-
-        <div id="gift-sea"></div>
 
         <div id="merrywrap" class="merrywrap">
           <div class="giftbox" id="giftbox">
@@ -1874,10 +1846,9 @@
             <div>
               <div class="c-label">Our Playlist — "The 2's"</div>
               <p class="c-text">
-                <b>216 songs</b> · <b>14h 57min</b> — and it keeps growing.<br /><br />
-                <b>14</b> hours = 7 × 2.<br />
-                <b>57</b> mins = 7 − 5 = <b>2</b>.<br />
-                <b>216</b> songs = starts with <b>2</b>. And 2+1+6 = <b>9</b>.
+                <b>216 songs</b> · <b>15h 00min</b> — and it keeps growing.<br /><br />
+                <b>15</b> hours -> 1 + 5 = <b>6</b> (letters in Greece).<br />
+                <b>216</b> songs -> starts with <b>2</b>. And 2+1+6 = <b>9</b>.
                 My day (27) is 9. Your day is 7. <b>9 − 7 = 2</b>. <br /><br />
                 <em style="color: var(--mint)"
                   >The universe is actually trolling us at this point.</em
@@ -1906,7 +1877,9 @@
         <div class="s-header">
           <div class="s-label rose">🎧 The Playlist</div>
           <h2 class="s-title">Our <em>Soundtrack</em></h2>
-          <p class="s-desc">216 songs. Two people. One ridiculous number.</p>
+          <p class="s-desc">
+            216 songs. 15 hours. Two people. One ridiculous number.
+          </p>
         </div>
 
         <div class="playlist-wrap">
@@ -1952,15 +1925,15 @@
                   <p>I was gonna write something</p>
                   <p>super deep, but let's be real,</p>
                   <p>we're not about that life. 😅</p>
-                  <p>&nbsp;</p>
+                  <p> </p>
                   <p>Even if the universe is fully</p>
                   <p>broken with all these 2's,</p>
                   <p>I'm honestly glad it glitched</p>
                   <p>us into being friends.</p>
-                  <p>&nbsp;</p>
+                  <p> </p>
                   <p>Distance means nothing when</p>
                   <p>the simulation forces it. 🌍</p>
-                  <p>&nbsp;</p>
+                  <p> </p>
                   <p>Go eat a pita gyros for me.</p>
                   <p class="sign">Chronia Polla! 🎂✨</p>
                   <p class="sign">— your fav Brazilian 🇵🇹♥</p>
@@ -1979,18 +1952,30 @@
     </div>
 
     <script>
+      // Parar SVG Cake no load para sincronizar depois do clique
+      document.addEventListener("DOMContentLoaded", () => {
+        const cakeSvg = document.getElementById("cake");
+        if (cakeSvg && cakeSvg.pauseAnimations) {
+          cakeSvg.pauseAnimations();
+        }
+      });
+
       // ─────────────────────────────────────────────────────────────────────────
       // INTRO SCREEN LOGIC
       // ─────────────────────────────────────────────────────────────────────────
       document
         .getElementById("skip-intro")
         .addEventListener("click", function () {
-          // Fade out overlay
           document.getElementById("intro-screen").classList.add("hidden");
-          // Adiciona classe para desativar o 'overflow: hidden' e iniciar animações do Hero
           document.body.classList.add("loaded");
 
-          // Explodir logo 2 ou 3 fogos de artifício para festejar a entrada!
+          // Retomar bolo SVG
+          const cakeSvg = document.getElementById("cake");
+          if (cakeSvg && cakeSvg.unpauseAnimations) {
+            cakeSvg.unpauseAnimations();
+          }
+
+          // Explodir log firework no meio!
           setTimeout(() => {
             if (bday) {
               bday.onClick({
@@ -2146,19 +2131,6 @@
       let then = now();
       const bday = new Birthday();
 
-      let bdayPaused = false;
-      let bdayRafId = null;
-      const giftSectionEl = document.getElementById("gift-section");
-      const pauseObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            bdayPaused = e.isIntersecting;
-          });
-        },
-        { threshold: 0.2 },
-      );
-      pauseObserver.observe(giftSectionEl);
-
       window.addEventListener("resize", () => bday.resize());
 
       function spawnFW(e) {
@@ -2174,8 +2146,7 @@
       document.addEventListener("touchstart", spawnFW, { passive: true });
 
       (function loop() {
-        bdayRafId = requestAnimationFrame(loop);
-        if (bdayPaused) return;
+        requestAnimationFrame(loop);
         const t = now();
         bday.update((t - then) / 1000);
         then = t;
@@ -2217,6 +2188,7 @@
       (function () {
         const giftCanvas = document.getElementById("gift-canvas");
         const gCtx = giftCanvas.getContext("2d");
+        const giftSectionEl = document.getElementById("gift-section");
 
         function resizeGift() {
           giftCanvas.width = window.innerWidth * DPR;
