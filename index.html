@@ -798,11 +798,9 @@
       }
     }
 
-    /* Mobile First Base */
     .book-card {
       color: var(--text);
       position: relative;
-      /* Tamanho base ligeiramente reduzido para telemóveis */
       width: 270px;
       height: 380px;
       background: #12111e;
@@ -818,16 +816,14 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Quando abre no Telemóvel: desliza 50% para a direita para não sair do ecrã e encolhe! */
     .book-card.open {
-      transform: perspective(2000px) translateX(50%) rotate(0deg) scale(0.65);
+      transform: perspective(2000px) translateX(25%) rotate(0deg) scale(0.65);
       box-shadow:
         inset 20px 0 50px rgba(0, 0, 0, 0.5),
         0 20px 80px rgba(0, 0, 0, 0.7),
         0 0 0 1px rgba(240, 190, 69, 0.2);
     }
 
-    /* Desktop: Restaurar a animação 3D fantástica */
     @media (min-width: 600px) {
       .book-card {
         width: 300px;
@@ -835,8 +831,7 @@
       }
 
       .book-card.open {
-        /* Desliza menos, roda e faz pop up */
-        transform: perspective(2000px) translateX(70px) rotate(15deg) scale(1.05);
+        transform: perspective(2000px) translateX(30px) rotate(15deg) scale(1.05);
       }
     }
 
@@ -2219,14 +2214,15 @@
 
     const bookCard = document.getElementById("bookCard");
     if (bookCard) {
-      bookCard.addEventListener("click", () =>
-        bookCard.classList.toggle("open"),
-      );
+      bookCard.addEventListener("click", (e) => {
+        bookCard.classList.toggle("open");
+      });
+
       bookCard.addEventListener("touchend", (e) => {
+        e.preventDefault(); // 🛑 Isto bloqueia o "clique fantasma" duplo!
         bookCard.classList.toggle("open");
       });
     }
-
     (function () {
       const giftCanvas = document.getElementById("gift-canvas");
       const gCtx = giftCanvas.getContext("2d");
